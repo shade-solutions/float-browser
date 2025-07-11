@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_incognito"
+        android:title="@string/incognito_mode"
+        android:icon="@drawable/ic_incognito"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_javascript"
+        android:title="@string/javascript"
+        android:icon="@drawable/ic_code"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_clear_cache"
+        android:title="@string/clear_cache"
+        android:icon="@drawable/ic_clear"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_view_source"
+        android:title="@string/view_source"
+        android:icon="@drawable/ic_code"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_settings"
+        app:showAsAction="never" />
+
+</menu>

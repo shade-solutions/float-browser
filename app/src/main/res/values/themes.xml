@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Light Theme -->
+    <style name="Theme.FloatBrowser" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        
+        <item name="colorSecondary">@color/redmi_blue</item>
+        <item name="colorSecondaryVariant">@color/redmi_blue</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+        
+        <item name="android:colorBackground">@color/background_primary</item>
+        <item name="colorSurface">@color/surface_primary</item>
+        <item name="colorOnBackground">@color/text_primary</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        
+        <!-- Status Bar -->
+        <item name="android:statusBarColor">@color/background_primary</item>
+        <item name="android:windowLightStatusBar">true</item>
+        
+        <!-- Navigation Bar -->
+        <item name="android:navigationBarColor">@color/background_primary</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        
+        <!-- Window -->
+        <item name="android:windowBackground">@color/background_primary</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowActivityTransitions">true</item>
+    </style>
+    
+    <!-- Settings Theme -->
+    <style name="Theme.FloatBrowser.Settings" parent="Theme.FloatBrowser">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+    </style>
+    
+    <!-- Dark Theme -->
+    <style name="Theme.FloatBrowser.Dark" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        
+        <item name="colorSecondary">@color/redmi_blue</item>
+        <item name="colorSecondaryVariant">@color/redmi_blue</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+        
+        <item name="android:colorBackground">@color/background_primary_dark</item>
+        <item name="colorSurface">@color/surface_primary_dark</item>
+        <item name="colorOnBackground">@color/text_primary_dark</item>
+        <item name="colorOnSurface">@color/text_primary_dark</item>
+        
+        <!-- Status Bar -->
+        <item name="android:statusBarColor">@color/status_bar_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
+        
+        <!-- Navigation Bar -->
+        <item name="android:navigationBarColor">@color/background_primary_dark</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        
+        <!-- Window -->
+        <item name="android:windowBackground">@color/background_primary_dark</item>
+    </style>
+</resources>

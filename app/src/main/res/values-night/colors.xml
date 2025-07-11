@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark Theme Color Overrides -->
+    <color name="background_primary">@color/background_primary_dark</color>
+    <color name="background_secondary">@color/background_secondary_dark</color>
+    <color name="surface_primary">@color/surface_primary_dark</color>
+    <color name="surface_secondary">@color/surface_secondary_dark</color>
+    
+    <color name="text_primary">@color/text_primary_dark</color>
+    <color name="text_secondary">@color/text_secondary_dark</color>
+    <color name="text_hint">@color/text_hint_dark</color>
+    
+    <color name="icon_primary">@color/icon_primary_dark</color>
+    <color name="icon_secondary">@color/icon_secondary_dark</color>
+    
+    <color name="webview_background">@color/webview_background_dark</color>
+    <color name="progress_background">@color/progress_background_dark</color>
+</resources>

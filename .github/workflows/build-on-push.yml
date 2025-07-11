@@ -1,0 +1,64 @@
+name: Build APK on Push
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+      
+    - name: Cache Gradle packages
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+          
+    - name: Make gradlew executable
+      run: chmod +x gradlew
+      
+    - name: Run tests
+      run: ./gradlew test
+      
+    - name: Build debug APK
+      run: ./gradlew assembleDebug
+      
+    - name: Check APK size
+      run: |
+        APK_SIZE=$(stat -c%s "app/build/outputs/apk/debug/app-debug.apk")
+        APK_SIZE_KB=$(echo $APK_SIZE | awk '{printf "%.1f", $1/1024}')
+        echo "APK Size: ${APK_SIZE_KB} KB"
+        
+        # Check if APK is under 1MB (1024 KB)
+        if (( $(echo "$APK_SIZE_KB > 1024" | bc -l) )); then
+          echo "❌ APK size (${APK_SIZE_KB} KB) exceeds 1MB target!"
+          exit 1
+        else
+          echo "✅ APK size (${APK_SIZE_KB} KB) is under 1MB target!"
+        fi
+        
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: float-browser-debug-${{ github.sha }}
+        path: app/build/outputs/apk/debug/app-debug.apk
+        retention-days: 30

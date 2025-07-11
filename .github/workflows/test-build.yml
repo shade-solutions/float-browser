@@ -1,0 +1,79 @@
+name: Test Build (Latest Actions)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+    paths:
+      - '.github/workflows/**'
+      - 'app/**'
+      - '*.gradle'
+
+permissions:
+  contents: read
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action@v2
+      
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+      
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v3
+      with:
+        gradle-version: wrapper
+        
+    - name: Make gradlew executable
+      run: chmod +x gradlew
+      
+    - name: Build debug APK
+      run: ./gradlew assembleDebug --no-daemon --stacktrace
+      
+    - name: Verify APK exists
+      run: |
+        if [ ! -f "app/build/outputs/apk/debug/app-debug.apk" ]; then
+          echo "❌ APK not found!"
+          exit 1
+        else
+          echo "✅ APK built successfully!"
+        fi
+        
+    - name: Check APK size
+      run: |
+        APK_SIZE=$(stat -c%s "app/build/outputs/apk/debug/app-debug.apk")
+        APK_SIZE_KB=$(echo $APK_SIZE | awk '{printf "%.1f", $1/1024}')
+        APK_SIZE_MB=$(echo $APK_SIZE | awk '{printf "%.2f", $1/1024/1024}')
+        
+        echo "📊 APK Size: ${APK_SIZE_KB} KB (${APK_SIZE_MB} MB)"
+        
+        # Check if APK is under 1MB (1024 KB)
+        if (( $(echo "$APK_SIZE_KB > 1024" | bc -l) )); then
+          echo "❌ APK size (${APK_SIZE_KB} KB) exceeds 1MB target!"
+          echo "::error::APK size ${APK_SIZE_KB} KB is over 1MB limit"
+          exit 1
+        else
+          echo "✅ APK size (${APK_SIZE_KB} KB) is under 1MB target!"
+          echo "::notice::APK size ${APK_SIZE_KB} KB meets size requirement"
+        fi
+        
+    - name: Upload test APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-build-apk-${{ github.run_number }}
+        path: app/build/outputs/apk/debug/app-debug.apk
+        retention-days: 7
+        if-no-files-found: error
